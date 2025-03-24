@@ -1,9 +1,12 @@
+import os
 import pandas as pd
 
 def load_algo_data(algo_names, map_name):
+    current_dir = os.path.dirname(os.path.abspath(__file__))
     dfs = []
     for name in algo_names:
-        df = pd.read_csv(f"metrics/{name}_{map_name}_metrics.csv")
+        metrics_path = os.path.join(current_dir, f"metrics/{name}_{map_name}_metrics.csv")
+        df = pd.read_csv(metrics_path)
         df["Algorithm"] = name
         dfs.append(df)
     return pd.concat(dfs, ignore_index=True)
@@ -69,7 +72,7 @@ def generate_report(combined_df, valid_episodes):
     return formatted_df.sort_values(["Episode", "Algo Name"]).reset_index(drop=True)
 
 if __name__ == "__main__":
-    map_name = "maze_dense"
+    map_name = "maze_medium"
     algo = "fg_drm"
     other_algos = ["dprm_planner", "dynamic_prm", "dynamic_ug"]
     algorithms = [algo] + other_algos

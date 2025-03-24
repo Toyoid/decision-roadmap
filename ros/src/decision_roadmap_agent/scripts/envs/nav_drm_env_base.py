@@ -184,9 +184,6 @@ class NavDRMEnvBase:
             print("Set Robot Pose Service Failed: %s" % e)
         print("[ROS Service Request]: New quadcopter state set.")
         
-        # publish joy to activate local planner
-        self._pub_falco_planner_joy()
-        
         # clear map and roadmap after reset
         rospy.wait_for_service(self.reset_roadmap_service_name)
         try:
@@ -240,6 +237,9 @@ class NavDRMEnvBase:
         print("[ROS Service Request]: Rotate to gain initial scan...")
         # NOTE: sleep for enough time (>2.2s) for the robot to rotate, scan and gain enough free range to build the roadmap
         rospy.sleep(2.5)
+
+        # publish joy to activate local planner
+        self._pub_falco_planner_joy()
 
         robot_pose, roadmap_state = self._get_next_state()
         '''

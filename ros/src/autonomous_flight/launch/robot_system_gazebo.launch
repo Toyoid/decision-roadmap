@@ -14,7 +14,7 @@
     train: maze_simple
     eval:  maze_simple [(-20, 20), (-10, 10)], maze_medium [(-10, 10), (-10, 10)], maze_dense [(-10, 10), (-16, 5)]-->
     <arg name="map_name" default="maze_medium" />
-    <arg name="drm_type" default="fg_drm"/> <!-- Options: dprm_planner, fg_drm, dynamic_prm, dynamic_ug -->
+    <arg name="drm_type" default="dynamic_ug"/> <!-- Options: dprm_planner, fg_drm, dynamic_prm, dynamic_ug -->
 
     <!-- start gazebo world -->
     <include file="$(find uav_simulator)/launch/start.launch" >
@@ -29,7 +29,7 @@
         <arg name="quadcopterYaw" value="$(arg quadcopterYaw)"/>
     </include> 
     
-    <!-- Decision Roadmap selection
+    <!-- Decision Roadmap selection -->
     <group if="$(eval drm_type == 'dprm_planner')">
         <include file="$(find autonomous_flight)/launch/run_dprm_planner.launch" />
     </group>
@@ -44,7 +44,7 @@
 
     <group if="$(eval drm_type == 'dynamic_ug')">
         <include file="$(find autonomous_flight)/launch/run_dynamic_ug.launch" />
-    </group> -->
+    </group>
 
     <!-- start local planner -->
     <include file="$(find falco_planner)/launch/run_falco_planner.launch" >

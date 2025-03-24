@@ -76,14 +76,20 @@ Now you are ready to run the project!
 
 ## Usage
 
+Launch the robot system with topological graph: 
+
 ```
 roslaunch autonomous_flight robot_system_gazebo.launch
 ```
+
+Train the DRL planning agent: 
 
 ```
 cd src/decision_roadmap_agent/scripts
 python train/train_sac_drm_nav.py
 ```
+
+Evaluate the DRL planning agent:
 
 ```
 cd src/decision_roadmap_agent/scripts
@@ -91,7 +97,9 @@ python eval/eval_sac_drm_nav.py
 ```
 
 ## References
+
 This repo is built upon the following works:
+
 - [CERLAB-UAV-Autonomy](https://github.com/Zhefan-Xu/CERLAB-UAV-Autonomy)
 - [Context_Aware_Navigation](https://github.com/marmotlab/Context_Aware_Navigation.git)
-- [develop]()
+- [aerial_autonomy_development_environment](https://github.com/Bottle101/aerial_autonomy_development_environment.git)

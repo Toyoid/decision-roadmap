@@ -21,7 +21,7 @@ dmax: 2.0
 
 nearest_neighbor_number: 15
 frontier_nearest_neighbor_number: 15
-max_connect_dist: 2.75  # maze_simple: 1.5, maze_dense: 1.8
+max_connect_dist: 2.0  # maze_simple: 1.5, maze_dense: 1.8
 num_yaw_angles: 32
 
 # Goal Candidate

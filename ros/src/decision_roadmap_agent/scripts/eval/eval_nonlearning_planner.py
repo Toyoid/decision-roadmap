@@ -18,7 +18,7 @@ def main():
     eval_num_episodes = 40
     episode_max_period = 124
     goal_near_th = 0.3
-    episode_start = 0
+    episode_start = 15
     metrics_csv_file = f"dprm_planner_{map_name}_metrics_{get_time_str()}.csv"
 
     # env setup
