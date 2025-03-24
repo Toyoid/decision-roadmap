@@ -1,4 +1,4 @@
-# Pursuit-Evasion Platform for Robot Learning (pep4rl)
+# Decision Roadmap: A framework for learning high-level navigation decisions (or planning decisions) via deep reinforcement learning
 
 ## Basic Requirements
 
@@ -34,42 +34,42 @@ To setup the python environment, first, create your virtual python environment w
 Then Clone the repo:
 
 ```commandline
-git clone https://github.com/Toyoid/pep4rl.git
+git clone https://github.com/Toyoid/decision-roadmap.git
 ```
 
 And install the dependencies with:
 
 ```commandline
-cd Path/To/pep4rl/
+cd Path/To/decision-roadmap/
 pip install -r requirements.txt
 ```
 
 ### 4. Build and Setup the Workspace
 
 Lastly, setup environment variables for this repo. You need to properly set both the ROS environment variables after building the workspace and the python environment variable.
-For the python environment variable, add `pep4rl` workspace to PYTHONPATH for package searching:
+For the python environment variable, add `decision-roadmap` workspace to PYTHONPATH for package searching:
 
 ```
-export PYTHONPATH="Path/To/pep4rl/learning:$PYTHONPATH"
+export PYTHONPATH="Path/To/decision-roadmap/ros/src/decision_roadmap_agent/scripts:$PYTHONPATH"
 ```
 
 Then follow the standard catkin_make process to build the ROS workspace:
 
 ```commandline
-cd Path/To/pep4rl/ros/
+cd Path/To/decision-roadmap/ros/
 catkin_make
 ```
 
 After that, setup environment variable by adding the following to your `~/.bashrc` file:
 
 ```commandline
-source Path/To/uav_simulator/gazeboSetup.bash
+source Path/To/decision-roadmap/ros/src/uav_simulator/gazeboSetup.bash
 ```
 
-Optionally, we recommend that you also add the `pep4rl` workspace to your `~/.bashrc` file for the convenience of future usage:
+Optionally, we recommend that you also add the `decision-roadmap` workspace to your `~/.bashrc` file for the convenience of future usage:
 
 ```commandline
-source Path/To/pep4rl/ros/devel/setup.bash
+source Path/To/decision-roadmap/ros/devel/setup.bash
 ```
 
 Now you are ready to run the project!
@@ -89,3 +89,9 @@ python train/train_sac_drm_nav.py
 cd src/decision_roadmap_agent/scripts
 python eval/eval_sac_drm_nav.py
 ```
+
+## References
+This repo is built upon the following works:
+- [CERLAB-UAV-Autonomy](https://github.com/Zhefan-Xu/CERLAB-UAV-Autonomy)
+- [Context_Aware_Navigation](https://github.com/marmotlab/Context_Aware_Navigation.git)
+- [develop]()

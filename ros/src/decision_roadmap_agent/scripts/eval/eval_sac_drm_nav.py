@@ -30,7 +30,7 @@ class InputArgs:
     drm_prefix: str = "fg_drm"
     map_name: str = "maze_medium"
     episode_start: int = 0
-    fg_drm_checkpoint_file: str = 'fg_drm_nav/20250315_233542_maze_dense/checkpoint_999.pth'
+    fg_drm_checkpoint_file: str = 'fg_drm_nav/20250314_011654_maze_medium/checkpoint_999.pth'
     dynamic_prm_checkpoint_file: str = 'dynamic_prm_nav/20250321_141526_maze_medium/checkpoint_999.pth'
 
 def main():
