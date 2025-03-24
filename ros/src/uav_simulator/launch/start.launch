@@ -1,0 +1,110 @@
+<launch>
+  <arg name="paused" default="false"/>
+  <arg name="verbose" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="debug" default="false" />
+  <arg name="headless" default="false"/>
+  <arg name="gazebo_gui" default="true"/>
+  <arg name="quadcopterX" default="0"/>
+  <arg name="quadcopterY" default="0"/>
+  <arg name="quadcopterInitZ" default="0.1"/>
+  <arg name="quadcopterYaw" default="0"/>
+  <arg name="use_keyboard" default="false"/>
+  <!-- options:
+    train: maze_simple
+    eval:  maze_simple, maze_medium, maze_dense -->
+  <arg name="map_name" default="maze_simple"/>  
+
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/dense_world.world" /> -->
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/training_worlds.world" /> -->
+  <arg name="world_name" value="$(find uav_simulator)/worlds/$(arg map_name).world" />
+  
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/room.world" /> -->
+
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/square/square_box.world" /> -->
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/square/square_static.world" /> -->
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/square/square_test.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/square/square_dynamic_7.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/square/square_box_dynamic_8.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/square/square_box_dynamic_14.world" /> -->
+  
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/floorplan1/floorplan1_static.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/floorplan1/floorplan1_dynamic_6.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/floorplan1/floorplan1_dynamic_16.world" /> -->
+
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/floorplan2/floorplan2_static.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/floorplan2/floorplan2_dynamic_5.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/floorplan2/floorplan2_dynamic_12.world" /> -->
+
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/floorplan3/floorplan3_static.world" /> -->
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/floorplan3/floorplan3_dynamic_8.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/floorplan3/floorplan3_box_static.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/floorplan3/floorplan3_box_dynamic_4.world" /> -->
+
+
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/corridor/corridor_static.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/corridor/corridor_dynamic_9.world" /> -->
+
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/tunnel/tunnel_basic_static.world" /> -->
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/tunnel/tunnel_c_shape_basic_static.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/tunnel/tunnel_dynamic_1.world" /> -->
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/tunnel/tunnel_s_shape_basic_static.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/tunnel/tunnel_static.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/tunnel/tunnel_static_long.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/tunnel/tunnel_straight_basic_static.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/tunnel/tunnel_straight_dynamic_5.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/tunnel/tunnel_straight_static.world" /> -->
+
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/building/building_static.world" /> -->
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/building/building_2f_static.world" /> -->
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/building/building_4f_static.world" /> -->
+
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/bridge/bridge_static.world" /> -->
+
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/test/empty.world" /> -->
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/test/test.world" /> -->
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/test/test2.world" /> -->
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/test/test_mill19_1.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/test/test_mill19_2.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/test/test_mill19_3.world" /> -->
+
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/simple_box/simple_box_static.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/simple_box/simple_box_dynamic_3.world" /> -->
+
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/room/room_empty.world" /> -->
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/room/room_static.world" /> -->
+
+  <!-- launch the custom world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch" >
+        <arg name="paused" value="$(arg paused)"/>
+        <arg name="world_name" value="$(arg world_name)"/>
+        <arg name="verbose" value="$(arg verbose)"/>
+        <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+        <arg name="debug" value="$(arg debug)" />
+        <arg name="headless" value="$(arg headless)"/>
+        <arg name="gui" value="$(arg gazebo_gui)" />
+  </include>
+  
+   <!-- send robot urdf to param server -->
+  <param name="robot_description" command="cat '$(find uav_simulator)/urdf/quadcopter.urdf'" />
+
+  <!-- limit the publish frequency of rostopics -->
+  <node pkg="topic_tools" type="throttle" name="gt_pose_throttle" args="messages /CERLAB/quadcopter/pose_raw 30 /CERLAB/quadcopter/pose"/>
+  <node pkg="topic_tools" type="throttle" name="gt_vel_throttle" args="messages /CERLAB/quadcopter/vel_raw 30 /CERLAB/quadcopter/vel"/>
+  <node pkg="topic_tools" type="throttle" name="gt_acc_throttle" args="messages /CERLAB/quadcopter/acc_raw 30 /CERLAB/quadcopter/acc"/>
+  <node pkg="topic_tools" type="throttle" name="gt_odom_throttle" args="messages /CERLAB/quadcopter/odom_raw 30 /CERLAB/quadcopter/odom"/>
+
+  <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model quadcopter -x $(arg quadcopterX) -y $(arg quadcopterY) -z $(arg quadcopterInitZ) -Y $(arg quadcopterYaw)" respawn="false" />
+
+  <!-- TF -->
+  <include file="$(find uav_simulator)/launch/setupTF.launch" >
+    <arg name="pose_topic" value="/CERLAB/quadcopter/pose" />
+  </include>
+
+  <group if="$(arg use_keyboard)">
+    <node name="keyboard_control" pkg="uav_simulator" type="keyboard_control" /> 
+  </group>
+
+  <!-- <include file="$(find uav_simulator)/launch/rviz.launch"></include> -->
+
+</launch>

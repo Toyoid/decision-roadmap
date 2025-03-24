@@ -1,0 +1,62 @@
+<launch>
+  <arg name="stateEstimationTopic" default="/falco_planner/state_estimation"/>
+  <arg name="depthCloudTopic" default="/camera/depth/points"/>
+  <arg name="depthCloudDelay" default="0"/>
+  <arg name="depthCamPitchOffset" default="0"/>
+  <arg name="depthCamXOffset" default="0"/>
+  <arg name="depthCamYOffset" default="0"/>
+  <arg name="depthCamZOffset" default="0"/>
+  <arg name="trackingCamBackward" default="false"/>
+  <arg name="trackingCamXOffset" default="0"/>
+  <arg name="trackingCamYOffset" default="0"/>
+  <arg name="trackingCamZOffset" default="0"/>
+  <arg name="trackingCamScale" default="1.0"/>
+  <arg name="vehicleX" default="0"/>
+  <arg name="vehicleY" default="0"/>
+  <arg name="vehicleZ" default="1.0"/>
+  <arg name="vehicleYaw" default="0"/>
+  <arg name="config" default="indoor"/>
+  <arg name="realtime_factor" default="1.0"/>
+  <arg name="use_builtin_rviz" default="true"/>
+  <arg name="robot_namespace" default=""/>
+
+  <include file="$(find falco_planner)/launch/local_planner_$(arg config).launch" >
+    <arg name="stateEstimationTopic" value="$(arg stateEstimationTopic)" />
+    <arg name="depthCloudTopic" value="$(arg depthCloudTopic)" />
+    <arg name="depthCloudDelay" value="$(arg depthCloudDelay)" />
+    <arg name="depthCamPitchOffset" value="$(arg depthCamPitchOffset)" />
+    <arg name="depthCamXOffset" value="$(arg depthCamXOffset)" />
+    <arg name="depthCamYOffset" value="$(arg depthCamYOffset)" />
+    <arg name="depthCamZOffset" value="$(arg depthCamZOffset)" />
+    <arg name="trackingCamBackward" value="$(arg trackingCamBackward)" />
+    <arg name="trackingCamXOffset" value="$(arg trackingCamXOffset)" />
+    <arg name="trackingCamYOffset" value="$(arg trackingCamYOffset)" />
+    <arg name="trackingCamZOffset" value="$(arg trackingCamZOffset)" />
+    <arg name="trackingCamScale" value="$(arg trackingCamScale)" />
+    <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+    <arg name="trackPointInitX" value="$(arg vehicleX)" />
+    <arg name="trackPointInitY" value="$(arg vehicleY)" />
+    <arg name="trackPointInitZ" value="$(arg vehicleZ)" />
+    <arg name="goalX" value="$(arg vehicleX)"/>
+    <arg name="goalY" value="$(arg vehicleY)"/>
+    <arg name="goalZ" value="$(arg vehicleZ)"/>
+  </include>
+
+  <node pkg="falco_planner" type="vehicle_simulator_node" name="vehicleSimulator" output="screen">
+    <param name="realtimeFactor" value="$(arg realtime_factor)" />
+    <param name="windCoeff" type="double" value="0.05" />
+    <param name="maxRollPitchRate" type="double" value="20.0" />
+    <param name="rollPitchSmoothRate" type="double" value="0.1" />
+    <param name="sensorPitch" value="$(arg depthCamPitchOffset)" />
+    <param name="vehicleX" value="$(arg vehicleX)" />
+    <param name="vehicleY" value="$(arg vehicleY)" />
+    <param name="vehicleZ" value="$(arg vehicleZ)" />
+    <param name="vehicleYaw" value="$(arg vehicleYaw)" />
+    <param name="robot_namespace" value="$(arg robot_namespace)"/>
+  </node>
+
+  <group if="$(arg use_builtin_rviz)">
+    <node launch-prefix="nice" pkg="rviz" type="rviz" name="rvizAA" args="-d $(find falco_planner)/rviz/vehicle_simulator_gazebo.rviz" respawn="true"/>
+  </group>
+
+</launch>

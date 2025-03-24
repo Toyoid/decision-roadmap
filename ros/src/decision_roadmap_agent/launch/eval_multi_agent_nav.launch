@@ -1,0 +1,23 @@
+<launch>
+    <!-- arguments -->
+    <arg name="map_name" default="maze_medium" />
+    <arg name="quad1_ns" default="quad1"/>
+    <arg name="quad2_ns" default="quad2"/>
+
+    <!-- Quadcopter 1 -->
+    <group ns="$(arg quad1_ns)">
+        <node name="eval_nonlearning_planner" pkg="decision_roadmap_agent" type="eval_nonlearning_planner.py" output="screen">
+            <param name="~robot_ns" value="$(arg quad1_ns)"/>
+            <param name="~map_name" value="$(arg map_name)"/>
+        </node>
+    </group>
+
+    <!-- Quadcopter 2 -->
+    <group ns="$(arg quad2_ns)">
+        <node name="eval_nonlearning_planner" pkg="decision_roadmap_agent" type="eval_nonlearning_planner.py" output="screen">
+            <param name="~robot_ns" value="$(arg quad2_ns)"/>
+            <param name="~map_name" value="$(arg map_name)"/>
+        </node>
+    </group>
+
+</launch>

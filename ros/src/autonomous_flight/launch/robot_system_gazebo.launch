@@ -1,0 +1,65 @@
+<launch>
+    <!-- arguments -->
+    <arg name="verbose" default="false"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="debug" default="false" />
+    <arg name="gazebo_gui" default="false"/>
+    <arg name="use_keyboard" default="false"/>
+    <arg name="quadcopterX" default="0"/>
+    <arg name="quadcopterY" default="0"/>
+    <arg name="quadcopterZ" default="1.0"/>
+    <arg name="quadcopterYaw" default="0"/>
+    <arg name="realtime_factor_falco" default="1.0"/>
+    <!-- options:
+    train: maze_simple
+    eval:  maze_simple [(-20, 20), (-10, 10)], maze_medium [(-10, 10), (-10, 10)], maze_dense [(-10, 10), (-16, 5)]-->
+    <arg name="map_name" default="maze_medium" />
+    <arg name="drm_type" default="fg_drm"/> <!-- Options: dprm_planner, fg_drm, dynamic_prm, dynamic_ug -->
+
+    <!-- start gazebo world -->
+    <include file="$(find uav_simulator)/launch/start.launch" >
+        <arg name="map_name" value="$(arg map_name)"/>
+        <arg name="verbose" value="$(arg verbose)"/>
+        <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+        <arg name="debug" value="$(arg debug)" />
+        <arg name="gazebo_gui" value="$(arg gazebo_gui)" />
+        <arg name="use_keyboard" value="$(arg use_keyboard)"/>
+        <arg name="quadcopterX" value="$(arg quadcopterX)"/>
+        <arg name="quadcopterY" value="$(arg quadcopterY)"/>
+        <arg name="quadcopterYaw" value="$(arg quadcopterYaw)"/>
+    </include> 
+    
+    <!-- Decision Roadmap selection
+    <group if="$(eval drm_type == 'dprm_planner')">
+        <include file="$(find autonomous_flight)/launch/run_dprm_planner.launch" />
+    </group>
+    
+    <group if="$(eval drm_type == 'fg_drm')">
+        <include file="$(find autonomous_flight)/launch/run_fg_drm.launch" />
+    </group>
+
+    <group if="$(eval drm_type == 'dynamic_prm')">
+        <include file="$(find autonomous_flight)/launch/run_dynamic_prm.launch" />
+    </group>
+
+    <group if="$(eval drm_type == 'dynamic_ug')">
+        <include file="$(find autonomous_flight)/launch/run_dynamic_ug.launch" />
+    </group> -->
+
+    <!-- start local planner -->
+    <include file="$(find falco_planner)/launch/run_falco_planner.launch" >
+        <arg name="realtime_factor" value="$(arg realtime_factor_falco)"/>
+        <arg name="use_builtin_rviz" value="false"/>
+        <arg name="vehicleX" value="$(arg quadcopterX)"/>
+        <arg name="vehicleY" value="$(arg quadcopterY)"/>
+        <arg name="vehicleZ" value="$(arg quadcopterZ)"/>
+        <arg name="vehicleYaw" value="$(arg quadcopterYaw)"/>
+    </include> 
+
+    <include file="$(find metrics_visualization)/launch/visualization_tools_gazebo.launch" >
+        <arg name="map_name" value="$(arg map_name)"/>
+    </include>
+
+    <!-- start rviz visualizer -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find rviz_visualize)/rviz/decision_graph.rviz" required="true"/>
+</launch>

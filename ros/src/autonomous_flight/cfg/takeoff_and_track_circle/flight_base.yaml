@@ -1,0 +1,3 @@
+takeoff_height: 1.0 #m
+radius: 4.0 #m
+circle_velocity: 4.0 #m/s  available max speed: , available min speed: 

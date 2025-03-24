@@ -1,0 +1,143 @@
+<launch>
+    <!-- arguments -->
+	<arg name="verbose" default="false"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="debug" default="false" />
+    <arg name="gazebo_gui" default="false"/>
+	<arg name="realtime_factor_falco" default="1.0"/>
+    <arg name="map_name" default="maze_medium" />
+	<arg name="quad1_drm_type" default="dprm_planner"/> <!-- Options: dprm_planner, fg_drm, dynamic_prm, dynamic_ug -->
+	<arg name="quad2_drm_type" default="fg_drm"/> <!-- Options: dprm_planner, fg_drm, dynamic_prm, dynamic_ug -->
+	
+	<arg name="quad1_ns" default="quad1"/>
+	<arg name="quad2_ns" default="quad2"/>
+	<arg name="quad1_x" default="0"/>
+	<arg name="quad1_y" default="0"/>
+	<arg name="quad1_z" default="1.0"/>
+	<arg name="quad1_yaw" default="0"/>
+	<arg name="quad2_x" default="0"/>
+	<arg name="quad2_y" default="-4.0"/>
+	<arg name="quad2_z" default="1.0"/>
+	<arg name="quad2_yaw" default="0"/>
+
+	<!-- start gazebo world -->
+	<include file="$(find uav_simulator)/launch/start_two_quads.launch" >
+        <arg name="map_name" value="$(arg map_name)"/>
+        <arg name="verbose" value="$(arg verbose)"/>
+        <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+        <arg name="debug" value="$(arg debug)" />
+        <arg name="gazebo_gui" value="$(arg gazebo_gui)" />
+		<arg name="quad1_ns" value="$(arg quad1_ns)"/>
+		<arg name="quad2_ns" value="$(arg quad2_ns)"/>
+		<arg name="quad1_x" value="$(arg quad1_x)"/>
+		<arg name="quad1_y" value="$(arg quad1_y)"/>
+		<arg name="quad1_yaw" value="$(arg quad1_yaw)"/>
+		<arg name="quad2_x" value="$(arg quad2_x)"/>
+		<arg name="quad2_y" value="$(arg quad2_y)"/>
+		<arg name="quad2_yaw" value="$(arg quad2_yaw)"/>
+    </include>
+
+	<!-- Quadcopter 1 -->
+	<group ns="$(arg quad1_ns)">
+		<!-- Decision Roadmap selection -->
+        <group if="$(eval quad1_drm_type == 'dprm_planner')">
+            <include file="$(find autonomous_flight)/launch/run_dprm_planner.launch" >
+                <arg name="robot_namespace" value="$(arg quad1_ns)"/>
+                <arg name="param_ns_prefix" value="$(arg quad1_ns)"/>
+            </include>
+        </group>
+        
+        <group if="$(eval quad1_drm_type == 'fg_drm')">
+            <include file="$(find autonomous_flight)/launch/run_fg_drm.launch" >
+                <arg name="robot_namespace" value="$(arg quad1_ns)"/>
+                <arg name="param_ns_prefix" value="$(arg quad1_ns)"/>
+            </include>
+        </group>
+
+        <group if="$(eval quad1_drm_type == 'dynamic_prm')">
+            <include file="$(find autonomous_flight)/launch/run_dynamic_prm.launch" >
+                <arg name="robot_namespace" value="$(arg quad1_ns)"/>
+                <arg name="param_ns_prefix" value="$(arg quad1_ns)"/>
+            </include>
+        </group>
+
+        <group if="$(eval quad1_drm_type == 'dynamic_ug')">
+            <include file="$(find autonomous_flight)/launch/run_dynamic_ug.launch" >
+                <arg name="robot_namespace" value="$(arg quad1_ns)"/>
+                <arg name="param_ns_prefix" value="$(arg quad1_ns)"/>
+            </include>
+        </group>
+
+		<!-- start local planner -->
+		<include file="$(find falco_planner)/launch/run_falco_planner.launch" >
+			<arg name="realtime_factor" value="$(arg realtime_factor_falco)"/>
+			<arg name="use_builtin_rviz" value="false"/>
+			<arg name="vehicleX" value="$(arg quad1_x)"/>
+			<arg name="vehicleY" value="$(arg quad1_y)"/>
+			<arg name="vehicleZ" value="$(arg quad1_z)"/>
+			<arg name="vehicleYaw" value="$(arg quad1_yaw)"/>
+			<arg name="robot_namespace" value="$(arg quad1_ns)"/>
+			<arg name="depthCloudTopic" value="/$(arg quad1_ns)/camera_ir/camera/depth/points"/>
+		</include> 
+
+		<!-- <include file="$(find metrics_visualization)/launch/visualization_tools_gazebo.launch" >
+			<arg name="map_name" value="$(arg map_name)"/>
+			<arg name="log_folder" value="log/$(arg quad1_ns)"/>
+			<arg name="robot_namespace" value="$(arg quad1_ns)"/>
+		</include> -->
+	</group>
+
+	<!-- Quadcopter 2 -->
+	<group ns="$(arg quad2_ns)">
+		<!-- Decision Roadmap selection -->
+        <group if="$(eval quad2_drm_type == 'dprm_planner')">
+            <include file="$(find autonomous_flight)/launch/run_dprm_planner.launch" >
+                <arg name="robot_namespace" value="$(arg quad2_ns)"/>
+                <arg name="param_ns_prefix" value="$(arg quad2_ns)"/>
+            </include>
+        </group>
+        
+        <group if="$(eval quad2_drm_type == 'fg_drm')">
+            <include file="$(find autonomous_flight)/launch/run_fg_drm.launch" >
+                <arg name="robot_namespace" value="$(arg quad2_ns)"/>
+                <arg name="param_ns_prefix" value="$(arg quad2_ns)"/>
+            </include>
+        </group>
+
+        <group if="$(eval quad2_drm_type == 'dynamic_prm')">
+            <include file="$(find autonomous_flight)/launch/run_dynamic_prm.launch" >
+                <arg name="robot_namespace" value="$(arg quad2_ns)"/>
+                <arg name="param_ns_prefix" value="$(arg quad2_ns)"/>
+            </include>
+        </group>
+
+        <group if="$(eval quad2_drm_type == 'dynamic_ug')">
+            <include file="$(find autonomous_flight)/launch/run_dynamic_ug.launch" >
+                <arg name="robot_namespace" value="$(arg quad2_ns)"/>
+                <arg name="param_ns_prefix" value="$(arg quad2_ns)"/>
+            </include>
+        </group>
+
+		<!-- start local planner -->
+		<include file="$(find falco_planner)/launch/run_falco_planner.launch" >
+			<arg name="realtime_factor" value="$(arg realtime_factor_falco)"/>
+			<arg name="use_builtin_rviz" value="false"/>
+			<arg name="vehicleX" value="$(arg quad2_x)"/>
+			<arg name="vehicleY" value="$(arg quad2_y)"/>
+			<arg name="vehicleZ" value="$(arg quad2_z)"/>
+			<arg name="vehicleYaw" value="$(arg quad2_yaw)"/>
+			<arg name="robot_namespace" value="$(arg quad2_ns)"/>
+			<arg name="depthCloudTopic" value="/$(arg quad2_ns)/camera_ir/camera/depth/points"/>
+		</include>
+
+		<!-- <include file="$(find metrics_visualization)/launch/visualization_tools_gazebo.launch" >
+			<arg name="map_name" value="$(arg map_name)"/>
+			<arg name="log_folder" value="log/$(arg quad2_ns)"/>
+			<arg name="robot_namespace" value="$(arg quad2_ns)"/>
+		</include> -->
+	</group>
+
+	<!-- start rviz visualizer -->
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find rviz_visualize)/rviz/two_quad_decision_graph.rviz" required="true"/>
+
+</launch>

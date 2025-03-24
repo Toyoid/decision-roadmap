@@ -1,0 +1,28 @@
+<launch>
+    <!-- arguments -->
+    <arg name="map_name" default="maze_medium" />
+    <arg name="quad1_ns" default="quad1"/>
+    <arg name="quad2_ns" default="quad2"/>
+    <arg name="drm_prefix" default="fg_drm"/>  <!-- options: [fg_drm, dep] -->
+    <!-- <env name="PYTHONPATH" value="/home/toy/anaconda3/envs/pep4rl/lib/python3.9/site-packages:$(env PYTHONPATH)"/> -->
+    <!-- <env name="PATH" value="/home/toy/anaconda3/envs/pep4rl/bin:$(env PATH)"/> -->
+
+    <!-- Quadcopter 1 -->
+    <group ns="$(arg quad1_ns)">
+        <node name="eval_nonlearning_planner" pkg="decision_roadmap_agent" type="eval_nonlearning_planner.py" output="screen">
+            <param name="~robot_ns" value="$(arg quad1_ns)"/>
+            <param name="~map_name" value="$(arg map_name)"/>
+            <param name="~is_assist_nav" value="True"/>
+        </node>
+    </group>
+
+    <!-- Quadcopter 2 -->
+    <!-- <group ns="$(arg quad2_ns)">
+        <node name="train_sac_drm_assist_nav" pkg="decision_roadmap_agent" type="train_sac_drm_assist_nav.py" output="screen">
+            <param name="~robot_ns" value="$(arg quad2_ns)"/>
+            <param name="~map_name" value="$(arg map_name)"/>
+            <param name="~drm_prefix" value="$(arg drm_prefix)"/>
+        </node>
+    </group> -->
+
+</launch>

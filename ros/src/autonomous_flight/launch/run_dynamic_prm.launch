@@ -1,0 +1,21 @@
+<launch>
+	<arg name="robot_namespace" default="CERLAB/quadcopter" />
+	<arg name="param_ns_prefix" default="" />
+	<!-- if you remap FROM topic "A" TO topic "B", then whenever a node thinks it is subscribing to topic "A", it is actually subscribing to topic "B", so anyone publishing to topic "B" will end up getting their message to this node! -->
+	<remap from="/mavros/local_position/odom" to="/$(arg robot_namespace)/odom" />
+	<remap from="/mavros/setpoint_raw/local" to="/$(arg robot_namespace)/cmd_acc" />
+
+	<rosparam file="$(find autonomous_flight)/cfg/dynamic_prm/fake_detector_param.yaml" />
+	<rosparam file="$(find autonomous_flight)/cfg/dynamic_prm/flight_base.yaml" ns="/$(arg param_ns_prefix)/autonomous_flight"/>
+	<!-- <rosparam file="$(find autonomous_flight)/cfg/dynamic_prm/exploration_param_large.yaml" ns="/$(arg param_ns_prefix)/DEP"/> -->
+	<rosparam file="$(find autonomous_flight)/cfg/dynamic_prm/exploration_param.yaml" ns="/$(arg param_ns_prefix)/DEP"/>
+	<rosparam file="$(find autonomous_flight)/cfg/dynamic_prm/dynamic_detector_param.yaml" ns="/$(arg param_ns_prefix)/onboard_detector" />
+	<!-- <rosparam file="$(find autonomous_flight)/cfg/dynamic_prm/mapping_param.yaml" ns="/$(arg param_ns_prefix)/dynamic_map" /> -->
+	<rosparam file="$(find autonomous_flight)/cfg/dynamic_prm/mapping_param.yaml" ns="/$(arg param_ns_prefix)/occupancy_map" />
+	<!-- <rosparam file="$(find autonomous_flight)/cfg/dynamic_prm/mapping_param_large.yaml" ns="/$(arg param_ns_prefix)/occupancy_map" /> -->
+
+	<node pkg="autonomous_flight" type="throttle_topics.sh" name="throttle_topics" />
+	<node pkg="autonomous_flight" type="dynamic_prm_node" name="dynamic_prm_node" output="screen" launch-prefix="gdb -ex run --args">
+		<param name="robot_namespace" value="$(arg robot_namespace)"/>
+	</node>
+</launch> 

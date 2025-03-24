@@ -1,0 +1,164 @@
+<launch>
+  <arg name="paused" default="false"/>
+  <arg name="verbose" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="debug" default="false" />
+  <arg name="headless" default="false"/>
+  <arg name="gazebo_gui" default="true" />
+  <arg name="map_name" default="maze_medium"/>
+
+  <arg name="quad1_ns" default="quad1"/>
+	<arg name="quad2_ns" default="quad2"/>
+	<arg name="quad1_x" default="0"/>
+	<arg name="quad1_y" default="0"/>
+	<arg name="quad1_init_z" default="0.1"/>
+	<arg name="quad1_yaw" default="0"/>
+	<arg name="quad2_x" default="0"/>
+	<arg name="quad2_y" default="-2.0"/>
+	<arg name="quad2_init_z" default="0.1"/>
+	<arg name="quad2_yaw" default="0"/>
+
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/dense_world.world" /> -->
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/training_worlds.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/$(arg map_name).world" /> -->
+  <arg name="world_name" value="$(find uav_simulator)/worlds/$(arg map_name).world" />
+  
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/room.world" /> -->
+
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/square/square_box.world" /> -->
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/square/square_static.world" /> -->
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/square/square_test.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/square/square_dynamic_7.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/square/square_box_dynamic_8.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/square/square_box_dynamic_14.world" /> -->
+  
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/floorplan1/floorplan1_static.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/floorplan1/floorplan1_dynamic_6.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/floorplan1/floorplan1_dynamic_16.world" /> -->
+
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/floorplan2/floorplan2_static.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/floorplan2/floorplan2_dynamic_5.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/floorplan2/floorplan2_dynamic_12.world" /> -->
+
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/floorplan3/floorplan3_static.world" /> -->
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/floorplan3/floorplan3_dynamic_8.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/floorplan3/floorplan3_box_static.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/floorplan3/floorplan3_box_dynamic_4.world" /> -->
+
+
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/corridor/corridor_static.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/corridor/corridor_dynamic_9.world" /> -->
+
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/tunnel/tunnel_basic_static.world" /> -->
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/tunnel/tunnel_c_shape_basic_static.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/tunnel/tunnel_dynamic_1.world" /> -->
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/tunnel/tunnel_s_shape_basic_static.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/tunnel/tunnel_static.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/tunnel/tunnel_static_long.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/tunnel/tunnel_straight_basic_static.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/tunnel/tunnel_straight_dynamic_5.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/tunnel/tunnel_straight_static.world" /> -->
+
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/building/building_static.world" /> -->
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/building/building_2f_static.world" /> -->
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/building/building_4f_static.world" /> -->
+
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/bridge/bridge_static.world" /> -->
+
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/test/empty.world" /> -->
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/test/test.world" /> -->
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/test/test2.world" /> -->
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/test/test_mill19_1.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/test/test_mill19_2.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/test/test_mill19_3.world" /> -->
+
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/simple_box/simple_box_static.world" /> -->
+  <!-- <arg name="world_name" value="$(find uav_simulator)/worlds/simple_box/simple_box_dynamic_3.world" /> -->
+
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/room/room_empty.world" /> -->
+<!--   <arg name="world_name" value="$(find uav_simulator)/worlds/room/room_static.world" /> -->
+
+  <!-- launch the custom world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch" >
+        <arg name="paused" value="$(arg paused)"/>
+        <arg name="world_name" value="$(arg world_name)"/>
+        <arg name="verbose" value="$(arg verbose)"/>
+        <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+        <arg name="debug" value="$(arg debug)" />
+        <arg name="headless" value="$(arg headless)"/>
+        <arg name="gui" value="$(arg gazebo_gui)" />
+  </include>
+  
+   <!-- send robot urdf to param server with namespace and tf_prefix parameters -->
+  <!-- <param name="robot_description_1" command="$(find xacro)/xacro '$(find uav_simulator)/urdf/quadcopter.urdf.xacro' robot_namespace:='/$(arg quad1_ns)' tf_prefix:='quad1_'" />
+  <param name="robot_description_2" command="$(find xacro)/xacro '$(find uav_simulator)/urdf/quadcopter.urdf.xacro' robot_namespace:='/$(arg quad2_ns)' tf_prefix:='quad2_'" /> -->
+  <!-- <param name="robot_description_1" command="$(find xacro)/xacro '$(find uav_simulator)/urdf/quadcopter.urdf.xacro' robot_namespace:='/$(arg quad1_ns)'" />
+  <param name="robot_description_2" command="$(find xacro)/xacro '$(find uav_simulator)/urdf/quadcopter.urdf.xacro' robot_namespace:='/$(arg quad2_ns)'" /> -->
+
+  <!-- Quad1 -->
+  <group ns="$(arg quad1_ns)">
+    <!-- Add robot_description parameter inside the namespace -->
+    <param name="robot_description" command="$(find xacro)/xacro '$(find uav_simulator)/urdf/quadcopter.urdf.xacro' robot_namespace:='/$(arg quad1_ns)'" />
+    <!-- <param name="robot_description" command="$(find xacro)/xacro '$(find uav_simulator)/urdf/quadcopter.urdf.xacro' robot_namespace:='/$(arg quad1_ns)' tf_prefix:='quad1_'" /> -->
+    
+    <node name="spawn_quad1" pkg="gazebo_ros" type="spawn_model" 
+          args="-urdf -param /$(arg quad1_ns)/robot_description
+                -model $(arg quad1_ns)
+                -x $(arg quad1_x) 
+                -y $(arg quad1_y) 
+                -z $(arg quad1_init_z) 
+                -Y $(arg quad1_yaw)" 
+          respawn="false">
+      <param name="robot_namespace" value="/$(arg quad1_ns)/"/>
+    </node>
+
+    <!-- limit the publish frequency of rostopics for quad1 -->
+    <node pkg="topic_tools" type="throttle" name="gt_pose_throttle" args="messages /$(arg quad1_ns)/pose_raw 30 /$(arg quad1_ns)/pose"/>
+    <node pkg="topic_tools" type="throttle" name="gt_vel_throttle" args="messages /$(arg quad1_ns)/vel_raw 30 /$(arg quad1_ns)/vel"/>
+    <node pkg="topic_tools" type="throttle" name="gt_acc_throttle" args="messages /$(arg quad1_ns)/acc_raw 30 /$(arg quad1_ns)/acc"/>
+    <node pkg="topic_tools" type="throttle" name="gt_odom_throttle" args="messages /$(arg quad1_ns)/odom_raw 30 /$(arg quad1_ns)/odom"/>
+
+    <!-- TF for quad1 -->
+    <node name="quadcopterTF" pkg="uav_simulator" type="quadcopterTFBroadcaster" output="screen">
+      <param name="pose_topic" value="/$(arg quad1_ns)/pose"/>
+      <param name="robot_namespace" value="$(arg quad1_ns)/"/>
+    </node>
+    <node pkg="tf" type="static_transform_publisher" name="baselink_cameralink"
+        args="0.09 0.0 0.095 -1.57 0 -1.57 $(arg quad1_ns)/base_link $(arg quad1_ns)/camera_link 1000" />
+  </group>
+
+  <!-- Quad2 -->
+  <group ns="$(arg quad2_ns)">
+    <!-- Add robot_description parameter inside the namespace -->
+    <param name="robot_description" command="$(find xacro)/xacro '$(find uav_simulator)/urdf/quadcopter.urdf.xacro' robot_namespace:='/$(arg quad2_ns)'" />
+    <!-- <param name="robot_description" command="$(find xacro)/xacro '$(find uav_simulator)/urdf/quadcopter.urdf.xacro' robot_namespace:='/$(arg quad2_ns)' tf_prefix:='quad2_'" /> -->
+    
+    <node name="spawn_quad2" pkg="gazebo_ros" type="spawn_model" 
+          args="-urdf -param /$(arg quad2_ns)/robot_description
+                -model $(arg quad2_ns)
+                -x $(arg quad2_x) 
+                -y $(arg quad2_y) 
+                -z $(arg quad2_init_z) 
+                -Y $(arg quad2_yaw)" 
+          respawn="false">
+      <param name="robot_namespace" value="/$(arg quad2_ns)/"/>
+    </node>
+
+    <!-- limit the publish frequency of rostopics for quad2 -->
+    <node pkg="topic_tools" type="throttle" name="gt_pose_throttle" args="messages /$(arg quad2_ns)/pose_raw 30 /$(arg quad2_ns)/pose"/>
+    <node pkg="topic_tools" type="throttle" name="gt_vel_throttle" args="messages /$(arg quad2_ns)/vel_raw 30 /$(arg quad2_ns)/vel"/>
+    <node pkg="topic_tools" type="throttle" name="gt_acc_throttle" args="messages /$(arg quad2_ns)/acc_raw 30 /$(arg quad2_ns)/acc"/>
+    <node pkg="topic_tools" type="throttle" name="gt_odom_throttle" args="messages /$(arg quad2_ns)/odom_raw 30 /$(arg quad2_ns)/odom"/>
+
+    <!-- TF for quad2 -->
+    <node name="quadcopterTF" pkg="uav_simulator" type="quadcopterTFBroadcaster" output="screen">
+      <param name="pose_topic" value="/$(arg quad2_ns)/pose"/>
+      <param name="robot_namespace" value="$(arg quad2_ns)/"/>
+    </node>
+    <node pkg="tf" type="static_transform_publisher" name="baselink_cameralink"
+        args="0.09 0.0 0.095 -1.57 0 -1.57 $(arg quad2_ns)/base_link $(arg quad2_ns)/camera_link 1000" />
+  </group>
+
+  <!-- <include file="$(find uav_simulator)/launch/rviz_two_quads.launch"></include> -->
+
+</launch>

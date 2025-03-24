@@ -1,0 +1,11 @@
+empy==3.3.4
+matplotlib
+numpy
+opencv_python
+tyro
+wandb
+tensorboard
+rospkg
+torch==2.0.0 
+torchvision==0.15.1
+torchaudio==2.0.1
