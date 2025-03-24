@@ -18,7 +18,7 @@ class InputArgs:
     drm_prefix: str = "dep"
     map_name: str = "maze_medium"
     episode_start: int = 0
-    checkpoint_file: str = 'dynamic_prm_nav/20250321_141526_maze_medium/checkpoint_999.pth'
+    checkpoint_file: str = 'dynamic_prm_nav/checkpoint_999.pth'
 
 def main():
     # tyro maintains a global registry of command-line parsers, so it should only be called once
